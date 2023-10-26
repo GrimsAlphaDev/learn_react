@@ -37,29 +37,52 @@
 
         function Counter() {
 
-            let [counter, setCounter] = React.useState(0);
+            const [counter, setCounter] = React.useState(0);
+            const [isDisable, setDisable] = React.useState(1);
+            const [isAddDisable, setAddBtn] = React.useState(0);
+            const [isMinDisable, setMinBtn] = React.useState(0);
 
             function CountPlus(){
-                setCounter(counter + 1);
+                if(counter >= 9){
+                    setCounter("Done!");
+                    setAddBtn(1);
+                    setMinBtn(1);
+                } else {
+                    setCounter(counter + 1);
+                    setDisable(0);
+                }
             }
 
             function CountMin(){
-                setCounter(counter - 1);
+                if(counter <= 0){
+                    setCounter("Done!");
+                    setAddBtn(1);
+                    setMinBtn(1);
+                    setDisable(0)
+                } else {
+                    setCounter(counter - 1);
+                    setDisable(0);
+                }
             }
 
             function Reset(){
-                setCounter(counter = 0);
+                setCounter(0);
+                setDisable(1);
+                setAddBtn(0);
+                setMinBtn(0);
             }
 
             return (
                 <div className="content">
                     <div className="row">
-                        <button className="me" onClick={CountMin}> - </button>
+                        <button className="me" onClick={CountMin} disabled={isMinDisable}> - </button>
                         <p className="me"> {counter} </p>
-                        <button onClick={CountPlus}> + </button>
-                    </div>
+                        <button disabled={isAddDisable} onClick={CountPlus}> + </button>
+                    </div> 
                     <div className="row">
-                        <button onClick={Reset}> Reset </button>
+                        <button onClick={Reset}
+                        disabled={isDisable}
+                        > Reset </button>
                     </div>
                 </div>
             );
