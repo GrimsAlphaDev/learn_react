@@ -18,17 +18,27 @@
         const container = document.getElementById('root');
         const root = ReactDOM.createRoot(container);
 
-        function Header(props){
-            return(<h1>Belajar React Banh {props.author} 🚀</h1>);
+        function Header({ author }) {
+            return (<h1>Belajar React Banh {author ? author : "User"} 🚀</h1>);
         }
 
-        function HomePage(){
-            return(
+        function HomePage() {
+            const students = ['Alpha', 'Beta', 'Charlie'];
+            const [likes, setLikes] = React.useState(0);
+
+            function handleClick(){ 
+                setLikes(likes + 1);
+            }
+
+            return (
                 <>
                     <Header author="Alpha" />
-                    <Header author="Beta" />
-                    <Header author="Charlie" />
-                    <Header author="Delta" />
+                    <ul>
+                        {students.map((student) => 
+                            <li key={student}>{student}</li>
+                        )}
+                    </ul>
+                    <button onClick={handleClick}>Like ({likes})</button>
                 </>
             );
         }
