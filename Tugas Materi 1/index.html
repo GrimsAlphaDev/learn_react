@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        /* make .row  */
+        .content {
+            width: 100px;
+        }
+        
+        .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .me {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+
+
+        function Counter() {
+
+            let [counter, setCounter] = React.useState(0);
+
+            function CountPlus(){
+                setCounter(counter + 1);
+            }
+
+            function CountMin(){
+                setCounter(counter - 1);
+            }
+
+            function Reset(){
+                setCounter(counter = 0);
+            }
+
+            return (
+                <div className="content">
+                    <div className="row">
+                        <button className="me" onClick={CountMin}> - </button>
+                        <p className="me"> {counter} </p>
+                        <button onClick={CountPlus}> + </button>
+                    </div>
+                    <div className="row">
+                        <button onClick={Reset}> Reset </button>
+                    </div>
+                </div>
+            );
+        }
+
+        
+
+        root.render(<Counter />);
+
+    </script>
+</body>
+
+</html>
