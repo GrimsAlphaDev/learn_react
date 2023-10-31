@@ -1,35 +1,78 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import Navbar from './components/Navbar';
+import Main from './components/Main';
+import Search from './components/Search';
+import NumResult from './components/NumResult';
+import Box from './components/Box';
+import AnimeList from './components/AnimeList';
+import AnimeDetail from './components/AnimeDetail';
 
-function App() {
-  const [count, setCount] = useState(0)
+const animesData = [
+  {
+    mal_id: 21,
+    title: 'One Piece',
+    year: 1999,
+    image: 'https://cdn.myanimelist.net/images/anime/6/73245.jpg',
+    score: 8.71,
+    synopsis:
+      'Barely surviving in a barrel after passing through a terrible whirlpool at sea, carefree Monkey D. Luffy ends up aboard a ship under attack by fearsome pirates. Despite being a naive-looking teenager, he is not to be underestimated. Unmatched in battle, Luffy is a pirate himself who resolutely pursues the coveted One Piece treasure and the King of the Pirates title that comes with it.',
+  },
+  {
+    mal_id: 20,
+    title: 'Naruto',
+    year: 2002,
+    image: 'https://cdn.myanimelist.net/images/anime/13/17405.jpg',
+    score: 8.71,
+    synopsis:
+      "Moments prior to Naruto Uzumaki's birth, a huge demon known as the Kyuubi, the Nine-Tailed Fox, attacked Konohagakure, the Hidden Leaf Village, and wreaked havoc. In order to put an end to the Kyuubi's rampage, the leader of the village, the Fourth Hokage, sacrificed his life and sealed the monstrous beast inside the newborn Naruto.",
+  },
+  {
+    mal_id: 269,
+    title: 'Bleach',
+    year: 2004,
+    image: 'https://cdn.myanimelist.net/images/anime/3/40451.jpg',
+    score: 8.71,
+    synopsis:
+      "Ichigo Kurosaki is an ordinary high schooler—until his family is attacked by a Hollow, a corrupt spirit that seeks to devour human souls. It is then that he meets a Soul Reaper named Rukia Kuchiki, who gets injured while protecting Ichigo's family from the assailant.",
+  },
+  {
+    mal_id: 31964,
+    title: 'Boku no Hero Academia',
+    year: 2016,
+    image: 'https://cdn.myanimelist.net/images/anime/10/78745.jpg',
+    score: 8.71,
+    synopsis:
+      'The appearance of "quirks", newly discovered super powers, has been steadily increasing over the years, with 80 percent of humanity possessing various abilities from manipulation of elements to shapeshifting. This leaves the remainder of the world completely powerless, and Izuku Midoriya is one such individual.',
+  },
+];
+
+export default function App() {
+  const [query, setQuery] = useState('');
+  const [animes, setAnimes] = useState(animesData);
+  const [selectedAnime, setSelectedAnime] = useState(animes[0]);
+  const [isOpen, setIsOpen] = useState(true);
+
+  function handleSelectedAnime(id) {
+    const newAnime = animes.filter((anime) => anime.mal_id === id);
+    setSelectedAnime(newAnime[0]);
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Navbar>
+        <Search query={query} setQuery={setQuery}>
+          <NumResult animes={animes}/>
+        </Search>
+      </Navbar>
+      <Main>
+        <Box isOpen={isOpen} setIsOpen={setIsOpen}>
+          <AnimeList animes={animes} handleSelectedAnime={handleSelectedAnime}/>
+        </Box>
+        <Box isOpen={isOpen} setIsOpen={setIsOpen}>
+          <AnimeDetail selectedAnime={selectedAnime}/>
+        </Box>
+      </Main>
     </>
-  )
+  );
 }
-
-export default App
